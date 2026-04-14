@@ -11,7 +11,7 @@ const Layout = ({ children, menu = "", submenu = "" }) => {
       {/* Navigation */}
       <Navigation menu={menu} submenu={submenu} navigationList={navList} />
       {/* Body */}
-      {children}
+      <div className="wrapper">{children}</div>
 
       {/* Footer */}
     </>
