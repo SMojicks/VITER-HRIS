@@ -1,38 +1,26 @@
-<?php 
+<?php
 
 require 'Database.php';
 require 'Response.php';
 
-
-function checkDbConnection(){
-    try{
+function checkDbConnection()
+{
+    try {
         $conn = Database::connectDb();
         return $conn;
-    }catch(PDOException $ex){
-    $response = new Response();
-    $error = [];
-    $error['type'] = "invalid_request_error"
-    $error['success'] = false;
-    $error['error'] = "Database connection failed"
-    $response->setSuccess(false);
-    $response->setStatusCode(200);
-    $response->setData($error);
-    $response->send();
-    exit;
+    } catch (PDOException $error) {
+        $response = new Response();
+        $error = [];
+        $error['type'] = "invalid_request_error";
+        $error['success'] = "false";
+        $error['error'] = "Database connection failed";
+        $response->setSuccess(false);
+        $response->setData($error);
+        $response->send();
+        exit;
     }
 }
-function returnError($msg)
-{
-    $response = new Response();
-    $error = [];
-    $response->setSuccess(false);
-    $error["count"] = 0;
-    $error["success"] = false;
-    $error['error'] = $msg;
-    $response->setData($error);
-    $response->send();
-    exit;
-}
+
 
 function checkApiKey()
 {
@@ -460,20 +448,6 @@ function returnSuccess($object, $name, $query, $data = "")
     exit;
 }
 
-// return error
-function returnError($msg)
-{
-    $response = new Response();
-    $error = [];
-    $response->setSuccess(false);
-    $error["count"] = 0;
-    $error["success"] = false;
-    $error['error'] = $msg;
-    $response->setData($error);
-    $response->send();
-    exit;
-}
-
 // return handle Error
 function returnHandleError(
     $msg,
@@ -663,4 +637,18 @@ function isEmptyItem($val, $secondVal = '')
 {
     if ($val) return $val;
     return $secondVal;
+}
+
+// return error
+function returnError($msg)
+{
+    $response = new Response();
+    $error = [];
+    $response->setSuccess(false);
+    $error["count"] = 0;
+    $error["success"] = false;
+    $error['error'] = $msg;
+    $response->setData($error);
+    $response->send();
+    exit;
 }
