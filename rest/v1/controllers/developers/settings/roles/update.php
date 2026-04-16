@@ -13,7 +13,15 @@ $val->role_name = $data['role_name'];
 $val->role_description = $data['role_description'];
 $val->role_updated = date("Y-m-d H:m:s");
 
+$role_name_old = $data['role_name_old'];
+
+// VALIDATIONS
 checkId($val->role_aid);
+compareName(
+    $val, //models
+    $role_name_old, //old record
+    $val->role_name //new record
+    );
 
 $query = checkUpdate($val);
 http_response_code(200);

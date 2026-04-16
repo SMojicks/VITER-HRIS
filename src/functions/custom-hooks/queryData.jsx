@@ -1,6 +1,5 @@
 import { devApiUrl, devKey } from "../functions-general";
 
-
 export const queryData = (endpoint, method = "get", fd = {}) => {
   let url = devApiUrl + endpoint;
   let username = devKey;
