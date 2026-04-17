@@ -8,11 +8,14 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import TableLoading from "../../../partials/TableLoading";
 import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import Loadmore from "../../../partials/Loadmore";
+import Status from "../../../partials/Status";
+import SearchBar from "../../../partials/SearchBar";
 
 const EmployeesList = ({ itemEdit, setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   //page
-  const [filterData, setfilterData] = React.useState(null);
+  const [filterData, setfilterData] = React.useState("");
   const [page, setPage] = React.useState(1);
   const [onSearch, setOnSearch] = React.useState(false);
   const search = React.useRef({ value: "" });
@@ -31,8 +34,8 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
     queryKey: ["employees", search.current.value, store.isSearch, filterData],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${apiVersion}/employees/search`, // search endpoint
-        `${apiVersion}/employees/page/${pageParam}`, // list endpoint
+        ``, // search endpoint
+        `${apiVersion}/controllers/developers/employees/page.php?start=${pageParam}`, // list endpoint
         // store.isSearch || isFilter, // search boolean, // search boolean
         false,
         {
@@ -59,10 +62,32 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
   }, [inView]);
   return (
     <>
+      <div className="flex items-center justify-between">
+        <div className="relative">
+          <label>Status</label>
+          <select
+            onChange={(e) => setfilterData(e.target.value)}
+            value={filterData}
+          >
+            <option value="">All</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+        <SearchBar
+          search={search}
+          dispatch={dispatch}
+          store={store}
+          result={result?.pages}
+          isFetching={isFetching}
+          setOnSearch={setOnSearch}
+          onSearch={onSearch}
+        />
+      </div>
       <div className="relative pt-4 rounded-md ">
         {status !== "pending" && isFetching && <FetchingSpinner />}
         <table>
-          <thead>
+          <thead className="text-center">
             <tr>
               <th>#</th>
               <th>Status</th>
@@ -71,6 +96,7 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
             </tr>
           </thead>
           <tbody>
+            {/* LOADING SCREEN FOR DATA */}
             {!error &&
               (status == "pending" || result?.pages[0]?.count == 0) && (
                 <tr>
@@ -83,6 +109,7 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
                   </td>
                 </tr>
               )}
+            {/* IF REQUEST IS FAILED THEN SHOW ERROR MESSAGE */}
             {error && (
               <tr>
                 <td colSpan="100%" className="p-10">
@@ -90,8 +117,40 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
                 </td>
               </tr>
             )}
+            {result?.pages?.map((page, key) => (
+              <React.Fragment key={key}>
+                {page?.data?.map((item, key) => {
+                  return (
+                    <tr className="text-center" key={key}>
+                      <td>{counter++}</td>
+                      <td>
+                        <Status
+                          text={`${item.employee_is_active == 1 ? "active" : "inactive"}`}
+                        />
+                      </td>
+                      <td>
+                        {item.employee_first_name} {item.employee_last_name}
+                      </td>
+                      <td>{item.employee_email}</td>
+                    </tr>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </tbody>
         </table>
+        <div className="loadmore flex justify-center flex-col items-center pb-10">
+          <Loadmore
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+            result={result?.pages[0]}
+            setPage={setPage}
+            page={page}
+            refView={ref}
+            isSearchOrFilter={store.isSearch || store?.isFilter}
+          />
+        </div>
       </div>
     </>
   );
