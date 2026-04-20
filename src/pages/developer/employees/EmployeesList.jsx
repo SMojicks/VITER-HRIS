@@ -11,6 +11,16 @@ import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import Loadmore from "../../../partials/Loadmore";
 import Status from "../../../partials/Status";
 import SearchBar from "../../../partials/SearchBar";
+import { FaArchive, FaEdit, FaTrash, FaTrashRestore } from "react-icons/fa";
+import ModalDelete from "../../../partials/modals/ModalDelete";
+import ModalRestore from "../../../partials/modals/ModalRestore";
+import ModalArchive from "../../../partials/modals/ModalArchive";
+import {
+  setIsAdd,
+  setIsArchive,
+  setIsDelete,
+  setIsRestore,
+} from "../../../store/StoreAction";
 
 const EmployeesList = ({ itemEdit, setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -53,6 +63,22 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
     },
     refetchOnWindowFocus: false,
   });
+  const handleEdit = (item) => {
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
+  };
+  const handleArchive = (item) => {
+    dispatch(setIsArchive(true));
+    setItemEdit(item);
+  };
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setItemEdit(item);
+  };
+  const handleDelete = (item) => {
+    dispatch(setIsDelete(true));
+    setItemEdit(item);
+  };
 
   React.useEffect(() => {
     if (inView) {
@@ -93,6 +119,7 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
               <th>Status</th>
               <th>Employee Name</th>
               <th>Email</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -132,6 +159,50 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
                         {item.employee_first_name} {item.employee_last_name}
                       </td>
                       <td>{item.employee_email}</td>
+                      {/* edit & archive / delete & restore */}
+                      <td>
+                        <div className="flex items-center gap-3 ">
+                          {item.employee_is_active == 1 ? (
+                            <>
+                              <button
+                                type="button"
+                                className="tooltip-action-table"
+                                data-tooltip="Edit"
+                                onClick={() => handleEdit(item)}
+                              >
+                                <FaEdit />
+                              </button>
+                              <button
+                                type="button"
+                                className="tooltip-action-table"
+                                data-tooltip="Archive"
+                                onClick={() => handleArchive(item)}
+                              >
+                                <FaArchive />
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className="tooltip-action-table"
+                                data-tooltip="Restore"
+                                onClick={() => handleRestore(item)}
+                              >
+                                <FaTrashRestore />
+                              </button>
+                              <button
+                                type="button"
+                                className="tooltip-action-table"
+                                data-tooltip="Delete"
+                                onClick={() => handleDelete(item)}
+                              >
+                                <FaTrash />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </td>
                     </tr>
                   );
                 })}
@@ -152,6 +223,36 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
           />
         </div>
       </div>
+      {store.isArchive && (
+        <ModalArchive
+          mysqlApiArchive={`${apiVersion}/controllers/developers/employees/active.php?id=${itemEdit.employee_aid}`}
+          dataItem={itemEdit}
+          queryKey="employees"
+          msg="Are you sure you want to archive this record?"
+          successMsg="Successfully archived."
+          item={itemEdit.employee_first_name}
+        />
+      )}
+      {store.isRestore && (
+        <ModalRestore
+          mysqlApiRestore={`${apiVersion}/controllers/developers/employees/active.php?id=${itemEdit.employee_aid}`}
+          dataItem={itemEdit}
+          queryKey="employees"
+          msg="Are you sure you want to restore this record?"
+          successMsg="Successfully restored."
+          item={itemEdit.employee_first_name}
+        />
+      )}
+      {store.isDelete && (
+        <ModalDelete
+          mysqlApiDelete={`${apiVersion}/controllers/developers/employees/employees.php?id=${itemEdit.employee_aid}`}
+          dataItem={itemEdit}
+          queryKey="employees"
+          msg="Are you sure you want to delete this record?"
+          successMsg="Successfully deleted."
+          item={itemEdit.employee_first_name}
+        />
+      )}
     </>
   );
 };

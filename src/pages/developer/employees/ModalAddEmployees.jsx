@@ -53,8 +53,8 @@ const ModalAddEmployees = ({ itemEdit }) => {
   const initVal = {
     ...itemEdit,
     employee_first_name: itemEdit ? itemEdit.employee_first_name : "",
-    employee_middle_name: itemEdit ? itemEdit.employee_first_name : "",
-    employee_last_name: itemEdit ? itemEdit.employee_first_name : "",
+    employee_middle_name: itemEdit ? itemEdit.employee_middle_name : "",
+    employee_last_name: itemEdit ? itemEdit.employee_last_name : "",
     employee_name_old: itemEdit ? itemEdit.employee_first_name : "",
   };
   const yupSchema = Yup.object({
