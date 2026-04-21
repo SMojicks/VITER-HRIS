@@ -135,6 +135,7 @@ const UsersList = ({ itemEdit, setItemEdit }) => {
               <th>Role</th>
               <th>Created</th>
               <th>Updated</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -180,11 +181,55 @@ const UsersList = ({ itemEdit, setItemEdit }) => {
                       <td>{item.role_name}</td>
                       <td>{formatDate(item.users_created)}</td>
                       <td>{formatDate(item.users_updated)}</td>
+                    <td>
+                      <div className="flex items-center gap-3 ">
+                        {item.users_is_active == 1 ? (
+                          <>
+                            <button
+                              type="button"
+                              className="tooltip-action-table"
+                              data-tooltip="Edit"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              type="button"
+                              className="tooltip-action-table"
+                              data-tooltip="Archive"
+                              onClick={() => handleArchive(item)}
+                            >
+                              <FaArchive />
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className="tooltip-action-table"
+                              data-tooltip="Restore"
+                              onClick={() => handleRestore(item)}
+                            >
+                              <FaTrashRestore />
+                            </button>
+                            <button
+                              type="button"
+                              className="tooltip-action-table"
+                              data-tooltip="Delete"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </td>
                     </tr>
                   );
                 })}
               </React.Fragment>
             ))}
+
           </tbody>
         </table>
         <div className="loadmore flex justify-center flex-col items-center pb-10">
@@ -200,6 +245,36 @@ const UsersList = ({ itemEdit, setItemEdit }) => {
           />
         </div>
       </div>
+      {store.isArchive && (
+        <ModalArchive
+          mysqlApiArchive={`${apiVersion}/controllers/developers/settings/users/active.php?id=${itemEdit.users_aid}`}
+          dataItem={itemEdit}
+          queryKey="users"
+          msg="Are you sure you want to archive this record?"
+          successMsg="Successfully archived."
+          item={itemEdit.users_first_name}
+        />
+      )}
+      {store.isRestore && (
+        <ModalRestore
+          mysqlApiRestore={`${apiVersion}/controllers/developers/settings/users/active.php?id=${itemEdit.users_aid}`}
+          dataItem={itemEdit}
+          queryKey="users"
+          msg="Are you sure you want to restore this record?"
+          successMsg="Successfully restored."
+          item={itemEdit.users_first_name}
+        />
+      )}
+      {store.isDelete && (
+        <ModalDelete
+          mysqlApiDelete={`${apiVersion}/controllers/developers/settings/users/users.php?id=${itemEdit.users_aid}`}
+          dataItem={itemEdit}
+          queryKey="users"
+          msg="Are you sure you want to delete this record?"
+          successMsg="Successfully deleted."
+          item={itemEdit.users_first_name}
+        />
+      )}
     </>
   );
 };

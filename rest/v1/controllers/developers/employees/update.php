@@ -23,7 +23,7 @@ checkId($val->employee_aid);
 compareName(
     $val, //models
     $employee_name_old, //old record
-    $val->employee_first_name //new record
+    $val->employee_first_name //new recordS
     );
 
 $query = checkUpdate($val);

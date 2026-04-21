@@ -1,6 +1,4 @@
 <?php 
-
-
 // checkdatabase connection
 $conn = null;
 $conn = checkDbConnection();      
@@ -8,25 +6,24 @@ $conn = checkDbConnection();
 $val = new Users($conn);
 
 if(array_key_exists("id",$_GET)){
-$val->users_aid = $_GET['id'];
-$val->users_name = $data['users_name'];
-$val->users_description = $data['users_description'];
-$val->users_updated = date("Y-m-d H:m:s");
+    $val->users_aid = $_GET['id'];
+    $val->users_first_name = trim($data['users_first_name']);
+    $val->users_last_name = trim($data['users_last_name']);
+    $val->users_email = trim($data['users_email']);
+    $val->users_role_id = $data['users_role_id']; 
+    $val->users_updated = date("Y-m-d H:m:s");
 
-$users_name_old = $data['users_name_old'];
 
-// VALIDATIONS
-checkId($val->users_aid);
-compareName(
-    $val, //models
-    $users_name_old, //old record
-    $val->users_name //new record
-    );
+    // VALIDATIONS
+    checkId($val->users_aid);
 
-$query = checkUpdate($val);
-http_response_code(200);
-returnSuccess($val, "Roles Update", $query);
+    isNameExist($val, $val->users_first_name . " " . $val->users_last_name);
+    isEmailExist($val, $val->users_email);
+
+
+    $query = checkUpdate($val);
+    http_response_code(200);
+    returnSuccess($val, "Users Update", $query);
 }
 
 checkEndpoint();
-
