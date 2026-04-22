@@ -79,6 +79,7 @@ class Memo
             $sql .= $this->search != '' ? " memo_category like :memo_category " : " "; 
             $sql .= $this->search != '' ? "  or memo_from like :memo_from " : " "; 
             $sql .= $this->search != '' ? "  or memo_to like :memo_to " : " "; 
+            $sql .= $this->search != '' ? "  or SUBSTRING_INDEX(memo_text, CHAR(10), 1) like :memo_title " : " ";
             $sql .= $this->search != '' ? " ) " : " "; 
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -87,6 +88,7 @@ class Memo
                     "memo_category" => "%{$this->search}%",
                     "memo_from" => "%{$this->search}%",
                     "memo_to" => "%{$this->search}%",
+                    "memo_title" => "%{$this->search}%",
                 ] : [],
             ]);
 
@@ -107,8 +109,8 @@ class Memo
             $sql .= $this->search != '' ? " memo_category like :memo_category " : " "; 
             $sql .= $this->search != '' ? "  or memo_from like :memo_from " : " "; 
             $sql .= $this->search != '' ? "  or memo_to like :memo_to " : " "; 
+            $sql .= $this->search != '' ? "  or SUBSTRING_INDEX(memo_text, CHAR(10), 1) like :memo_title " : " ";
             $sql .= $this->search != '' ? " ) " : " ";
-            $sql .= " order by memo_is_active desc, memo_created desc ";
             $sql .= " limit :start, "; 
             $sql .= " :total "; 
             $query = $this->connection->prepare($sql);
@@ -120,6 +122,7 @@ class Memo
                     "memo_category" => "%{$this->search}%",
                     "memo_from" => "%{$this->search}%",
                     "memo_to" => "%{$this->search}%",
+                    "memo_title" => "%{$this->search}%",
                 ] : [],
             ]);
 
@@ -168,7 +171,7 @@ class Memo
                 "memo_aid" => $this->memo_aid,
             ]);
         }catch(PDOException $e){
-            // returnError($e); //turn on whe debugging
+            // returnError($e); //turn on when debugging
             $query = false;
         } return $query;
     }
@@ -182,7 +185,7 @@ class Memo
                 "memo_aid" => $this->memo_aid,
             ]);
         }catch(PDOException $e){
-            // returnError($e); //turn on whe debugging
+            // returnError($e); //turn on when debugging
             $query = false;
         } return $query;
     }
