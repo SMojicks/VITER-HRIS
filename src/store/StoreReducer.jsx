@@ -1,5 +1,10 @@
 export const StoreReducer = (state, action) => {
   switch (action.type) {
+    case "SET_IS_VIEW":
+  return {
+    ...state,
+    isView: action.payload,
+  };
     case "ERROR":
       return {
         ...state,

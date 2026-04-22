@@ -1,3 +1,9 @@
+export const setIsView = (val) => {
+  return {
+    type: "SET_IS_VIEW",
+    payload: val,
+  };
+};
 export const setError = (val) => {
   return {
     type: "ERROR",
