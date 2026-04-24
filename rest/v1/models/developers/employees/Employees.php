@@ -149,8 +149,7 @@ class Employees
         }
         return $query;
     }
-    public function update()
-    {
+    public function update(){
         try {
             $sql = " update {$this->tblEmployees} set ";
             $sql .= " employee_first_name = :employee_first_name, ";
@@ -205,7 +204,7 @@ class Employees
             $query = false;
         } return $query;
     }
-        public function checkName(){
+    public function checkName(){
         try{
             $sql = "select ";
             $sql .= " employee_first_name ";

@@ -33,6 +33,7 @@ CREATE TABLE `employees` (
   `employee_first_name` varchar(128) NOT NULL,
   `employee_middle_name` varchar(128) NOT NULL,
   `employee_last_name` varchar(128) NOT NULL,
+  `employee_department_id` varchar(20) NOT NULL,
   `employee_email` varchar(255) NOT NULL,
   `employee_created` datetime NOT NULL,
   `employee_updated` datetime NOT NULL

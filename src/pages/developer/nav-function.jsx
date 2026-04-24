@@ -35,11 +35,15 @@ export const navList = [
         label: "department",
         path: `${devNavUrl}/${urlDeveloper}/settings/department`,
       },
+      {
+        label: "notification",
+        path: `${devNavUrl}/${urlDeveloper}/settings/notification`,
+      },
     ],
   },
   {
     label: "Memo",
     path: `${devNavUrl}/${urlDeveloper}/memo`,
-    icon: <FaClipboardList />, 
+    icon: <FaClipboardList />,
   },
 ];

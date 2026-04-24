@@ -14,7 +14,7 @@ $val->employee_email = trim($data['employee_email']);
 $val->employee_created = date("Y-m-d H:i:s");
 $val->employee_updated = date("Y-m-d H:i:s");
 
-// VALIDATIONS (e.g., checking if email or name exists, if applicable in your system)
+// VALIDATIONS 
 // isNameExist($val, $val->employee_first_name); 
 
 $query = checkCreate($val);
