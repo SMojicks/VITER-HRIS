@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2026 at 04:33 AM
+-- Generation Time: May 04, 2026 at 09:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -116,9 +116,8 @@ CREATE TABLE `settings_notification` (
 --
 
 INSERT INTO `settings_notification` (`notification_aid`, `notification_is_active`, `notification_first_name`, `notification_last_name`, `notification_purpose`, `notification_email`, `notification_created`, `notification_updated`) VALUES
-(4, 1, 'Seb', 'Mojica', 'Leave', 'seb@gmail.com', '2026-04-24 10:04:11', '2026-04-24 10:04:17'),
 (5, 1, 'Jhonas', 'Sotero', 'Overtime', 'sotero@gmail.com', '2026-04-24 10:04:53', '2026-04-24 10:04:53'),
-(6, 1, 'David', 'Malabanan123', 'Overtime', 'Malabanan@gmail.com', '2026-04-24 10:04:07', '2026-04-24 10:04:45');
+(6, 1, 'David', 'Malabanan123', 'Overtime', 'Malabanan@gmail.com', '2026-04-24 10:04:07', '2026-04-24 12:04:24');
 
 -- --------------------------------------------------------
 
@@ -130,6 +129,7 @@ CREATE TABLE `settings_roles` (
   `role_aid` int(11) NOT NULL,
   `role_is_active` tinyint(1) NOT NULL,
   `role_name` varchar(128) NOT NULL,
+  `role_code` varchar(50) NOT NULL,
   `role_description` text NOT NULL,
   `role_created` datetime NOT NULL,
   `role_updated` datetime NOT NULL
@@ -139,9 +139,10 @@ CREATE TABLE `settings_roles` (
 -- Dumping data for table `settings_roles`
 --
 
-INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_description`, `role_created`, `role_updated`) VALUES
-(22, 1, 'developer', 'test', '2026-04-16 12:04:30', '2026-04-20 14:04:46'),
-(23, 1, 'admin', 'test', '2026-04-16 12:04:38', '2026-04-20 14:04:49');
+INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_code`, `role_description`, `role_created`, `role_updated`) VALUES
+(22, 1, 'developer', 'r_is_developer', 'test', '2026-04-16 12:04:30', '2026-05-04 08:05:24'),
+(23, 1, 'admin', 'r_is_admin', 'test', '2026-04-16 12:04:38', '2026-05-04 08:05:56'),
+(24, 1, 'viewer', 'r_is_viewer', 'viewer', '2026-05-04 08:05:09', '2026-05-04 08:05:09');
 
 -- --------------------------------------------------------
 
@@ -157,6 +158,7 @@ CREATE TABLE `settings_users` (
   `users_email` varchar(255) NOT NULL,
   `users_role_id` varchar(20) NOT NULL,
   `users_password` varchar(255) NOT NULL,
+  `users_key` varchar(255) NOT NULL,
   `users_created` datetime NOT NULL,
   `users_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -165,9 +167,8 @@ CREATE TABLE `settings_users` (
 -- Dumping data for table `settings_users`
 --
 
-INSERT INTO `settings_users` (`users_aid`, `users_is_active`, `users_first_name`, `users_last_name`, `users_email`, `users_role_id`, `users_password`, `users_created`, `users_updated`) VALUES
-(9, 1, 'John', 'Doe', 'johndoe@gmail.com', '22', '', '2026-04-24 08:04:59', '2026-04-24 08:04:59'),
-(10, 1, 'Jane', 'Doe', 'janedoe@gmail.com', '23', '', '2026-04-24 08:04:15', '2026-04-24 08:04:15');
+INSERT INTO `settings_users` (`users_aid`, `users_is_active`, `users_first_name`, `users_last_name`, `users_email`, `users_role_id`, `users_password`, `users_key`, `users_created`, `users_updated`) VALUES
+(24, 1, 'Seb', 'Mojica', 'sebastianmojica03@gmail.com', '22', '$2y$10$mUBr.GqRMhvYXdRPI3UiyupknaZKYj3ASw0Fg2IX/Ce1Z5S/nTueO', '', '2026-05-04 15:05:43', '2026-05-04 15:25:07');
 
 --
 -- Indexes for dumped tables
@@ -235,19 +236,19 @@ ALTER TABLE `settings_department`
 -- AUTO_INCREMENT for table `settings_notification`
 --
 ALTER TABLE `settings_notification`
-  MODIFY `notification_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `notification_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `settings_roles`
 --
 ALTER TABLE `settings_roles`
-  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `settings_users`
 --
 ALTER TABLE `settings_users`
-  MODIFY `users_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `users_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

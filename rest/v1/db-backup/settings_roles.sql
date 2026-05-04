@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2026 at 08:51 AM
+-- Generation Time: May 04, 2026 at 09:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `settings_roles` (
   `role_aid` int(11) NOT NULL,
   `role_is_active` tinyint(1) NOT NULL,
   `role_name` varchar(128) NOT NULL,
+  `role_code` varchar(50) NOT NULL,
   `role_description` text NOT NULL,
   `role_created` datetime NOT NULL,
   `role_updated` datetime NOT NULL
@@ -40,9 +41,10 @@ CREATE TABLE `settings_roles` (
 -- Dumping data for table `settings_roles`
 --
 
-INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_description`, `role_created`, `role_updated`) VALUES
-(22, 1, 'test1', 'asd', '2026-04-16 12:04:30', '2026-04-16 12:04:30'),
-(23, 1, 'test11', 'asdw', '2026-04-16 12:04:38', '2026-04-16 12:04:38');
+INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_code`, `role_description`, `role_created`, `role_updated`) VALUES
+(22, 1, 'developer', 'r_is_developer', 'test', '2026-04-16 12:04:30', '2026-05-04 08:05:24'),
+(23, 1, 'admin', 'r_is_admin', 'test', '2026-04-16 12:04:38', '2026-05-04 08:05:56'),
+(24, 1, 'viewer', 'r_is_viewer', 'viewer', '2026-05-04 08:05:09', '2026-05-04 08:05:09');
 
 --
 -- Indexes for dumped tables
@@ -62,7 +64,7 @@ ALTER TABLE `settings_roles`
 -- AUTO_INCREMENT for table `settings_roles`
 --
 ALTER TABLE `settings_roles`
-  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

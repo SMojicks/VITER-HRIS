@@ -3,6 +3,8 @@
 require 'Database.php';
 require 'Response.php';
 
+
+
 function checkDbConnection()
 {
     try {

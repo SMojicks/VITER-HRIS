@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2026 at 08:51 AM
+-- Generation Time: May 04, 2026 at 09:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,6 +40,14 @@ CREATE TABLE `employees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`employee_aid`, `employee_is_active`, `employee_first_name`, `employee_middle_name`, `employee_last_name`, `employee_department_id`, `employee_email`, `employee_created`, `employee_updated`) VALUES
+(1, 1, 'testtes', 'test', 'test', '1', 'test@gmail.com', '2026-04-24 07:27:35', '2026-04-24 07:27:35'),
+(2, 1, 'Seb', 'Austria', 'Mojica', '2', 'seb@gmail.com', '2026-04-24 08:09:59', '2026-04-24 08:09:59');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -57,7 +65,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_aid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `employee_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

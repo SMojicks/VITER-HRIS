@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2026 at 01:19 AM
+-- Generation Time: May 04, 2026 at 09:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,14 @@ CREATE TABLE `settings_department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `settings_department`
+--
+
+INSERT INTO `settings_department` (`department_aid`, `department_is_active`, `department_name`, `department_created`, `department_updated`) VALUES
+(3, 1, 'test', '2026-04-24 08:08:53', '2026-04-24 08:39:34'),
+(4, 1, 'HR Department', '2026-04-24 08:08:59', '2026-04-24 08:08:59');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -53,7 +61,7 @@ ALTER TABLE `settings_department`
 -- AUTO_INCREMENT for table `settings_department`
 --
 ALTER TABLE `settings_department`
-  MODIFY `department_aid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `department_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

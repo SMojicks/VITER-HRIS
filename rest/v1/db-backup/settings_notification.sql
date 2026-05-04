@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2026 at 04:33 AM
+-- Generation Time: May 04, 2026 at 09:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,9 +43,8 @@ CREATE TABLE `settings_notification` (
 --
 
 INSERT INTO `settings_notification` (`notification_aid`, `notification_is_active`, `notification_first_name`, `notification_last_name`, `notification_purpose`, `notification_email`, `notification_created`, `notification_updated`) VALUES
-(4, 1, 'Seb', 'Mojica', 'Leave', 'seb@gmail.com', '2026-04-24 10:04:11', '2026-04-24 10:04:17'),
 (5, 1, 'Jhonas', 'Sotero', 'Overtime', 'sotero@gmail.com', '2026-04-24 10:04:53', '2026-04-24 10:04:53'),
-(6, 1, 'David', 'Malabanan123', 'Overtime', 'Malabanan@gmail.com', '2026-04-24 10:04:07', '2026-04-24 10:04:45');
+(6, 1, 'David', 'Malabanan123', 'Overtime', 'Malabanan@gmail.com', '2026-04-24 10:04:07', '2026-04-24 12:04:24');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +64,7 @@ ALTER TABLE `settings_notification`
 -- AUTO_INCREMENT for table `settings_notification`
 --
 ALTER TABLE `settings_notification`
-  MODIFY `notification_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `notification_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
