@@ -2,7 +2,7 @@ import React from "react";
 import { StoreContext } from "../../../store/StoreContext";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryDataInfinite } from "../../../functions/custom-hooks/queryDataInfinite";
-import { apiVersion } from "../../../functions/functions-general";
+import { apiVersion, formatDate } from "../../../functions/functions-general";
 import { useInView } from "react-intersection-observer";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
@@ -118,6 +118,8 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
               <th>#</th>
               <th>Status</th>
               <th>Employee Name</th>
+              <th>Start Date</th>
+              <th>Birthday</th>
               <th>Department</th>
               <th>Email</th>
               <th></th>
@@ -159,6 +161,8 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
                       <td>
                         {item.employee_first_name} {item.employee_last_name}
                       </td>
+                      <td>{formatDate(item.employee_start_work_date, "--", "short-date")}</td>
+                      <td>{formatDate(item.employee_birthday, "--", "short-date")}</td>
                       <td>{item.department_name}</td>
                       <td>{item.employee_email}</td>
                       {/* edit & archive / delete & restore */}

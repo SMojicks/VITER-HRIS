@@ -7,6 +7,8 @@ class Employees
     public $employee_first_name;
     public $employee_middle_name;
     public $employee_last_name;
+    public $employee_birthday;
+    public $employee_start_work_date;
     public $employee_email;
     public $employee_created;
     public $employee_updated;
@@ -38,6 +40,8 @@ class Employees
             $sql .= " employee_first_name, ";
             $sql .= " employee_middle_name, ";
             $sql .= " employee_last_name, ";
+            $sql .= " employee_start_work_date, ";
+            $sql .= " employee_birthday, ";
             $sql .= " employee_department_id, "; 
             $sql .= " employee_email, ";
             $sql .= " employee_created, ";
@@ -47,6 +51,8 @@ class Employees
             $sql .= " :employee_first_name, ";
             $sql .= " :employee_middle_name, ";
             $sql .= " :employee_last_name, ";
+            $sql .= " :employee_start_work_date, ";
+            $sql .= " :employee_birthday, ";
             $sql .= " :employee_department_id, "; 
             $sql .= " :employee_email, ";
             $sql .= " :employee_created, ";
@@ -58,6 +64,8 @@ class Employees
                 "employee_first_name" => $this->employee_first_name,
                 "employee_middle_name" => $this->employee_middle_name,
                 "employee_last_name" => $this->employee_last_name,
+                "employee_start_work_date" => $this->employee_start_work_date,
+                "employee_birthday" => $this->employee_birthday,
                 "employee_department_id" => $this->employee_department_id, 
                 "employee_email" => $this->employee_email,
                 "employee_created" => $this->employee_created,
@@ -69,7 +77,7 @@ class Employees
         }
         return $query;
     }
-    public function readAll(){
+public function readAll(){
         try{
             // JOINING TABLE
             $sql = "select ";
@@ -84,6 +92,8 @@ class Employees
             $sql .= $this->search != '' ? " employees.employee_first_name like :employee_first_name  " : " ";
             $sql .= $this->search != '' ? " or employees.employee_last_name like :employee_last_name  " : " ";
             $sql .= $this->search != '' ? " or employees.employee_email like :employee_email  " : " ";
+            // Added department search here:
+            $sql .= $this->search != '' ? " or department.department_name like :department_name  " : " ";
             $sql .= $this->search != '' ? " or CONCAT(employees.employee_last_name,' ',employees.employee_first_name) like :employee_last_fullname " : " ";
             $sql .= $this->search != '' ? " or CONCAT(employees.employee_first_name,' ',employees.employee_last_name) like :employee_first_fullname " : " ";
             $sql .= $this->search != '' ? " ) " : " ";
@@ -96,6 +106,8 @@ class Employees
                     "employee_first_name" => "%{$this->search}%",
                     "employee_last_name" => "%{$this->search}%",
                     "employee_email" => "%{$this->search}%",
+                    // Bind department search parameter:
+                    "department_name" => "%{$this->search}%",
                     "employee_last_fullname" => "%{$this->search}%",
                     "employee_first_fullname" => "%{$this->search}%",
                 ] : [],
@@ -122,6 +134,8 @@ class Employees
             $sql .= $this->search != '' ? " employees.employee_first_name like :employee_first_name  " : " ";
             $sql .= $this->search != '' ? " or employees.employee_last_name like :employee_last_name  " : " ";
             $sql .= $this->search != '' ? " or employees.employee_email like :employee_email  " : " ";
+            // Added department search here:
+            $sql .= $this->search != '' ? " or department.department_name like :department_name  " : " ";
             $sql .= $this->search != '' ? " or CONCAT(employees.employee_last_name,' ',employees.employee_first_name) like :employee_last_fullname " : " ";
             $sql .= $this->search != '' ? " or CONCAT(employees.employee_first_name,' ',employees.employee_last_name) like :employee_first_fullname " : " ";
             $sql .= $this->search != '' ? " ) " : " ";
@@ -137,6 +151,8 @@ class Employees
                     "employee_first_name" => "%{$this->search}%",
                     "employee_last_name" => "%{$this->search}%",
                     "employee_email" => "%{$this->search}%",
+                    // Bind department search parameter:
+                    "department_name" => "%{$this->search}%",
                     "employee_last_fullname" => "%{$this->search}%",
                     "employee_first_fullname" => "%{$this->search}%",
                 ] : [],
@@ -155,6 +171,8 @@ class Employees
             $sql .= " employee_first_name = :employee_first_name, ";
             $sql .= " employee_middle_name = :employee_middle_name, ";
             $sql .= " employee_last_name = :employee_last_name, ";
+            $sql .= " employee_start_work_date = :employee_start_work_date, ";
+            $sql .= " employee_birthday = :employee_birthday, ";
             $sql .= " employee_department_id = :employee_department_id, ";
             $sql .= " employee_email = :employee_email, ";
             $sql .= " employee_updated = :employee_updated ";
@@ -164,6 +182,8 @@ class Employees
                 "employee_first_name" => $this->employee_first_name,
                 "employee_middle_name" => $this->employee_middle_name,
                 "employee_last_name" => $this->employee_last_name,
+                "employee_start_work_date" => $this->employee_start_work_date,
+                "employee_birthday" => $this->employee_birthday,
                 "employee_department_id" => $this->employee_department_id,
                 "employee_email" => $this->employee_email,
                 "employee_updated" => $this->employee_updated,

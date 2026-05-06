@@ -65,8 +65,10 @@ const ModalAddEmployees = ({ itemEdit }) => {
     employee_first_name: itemEdit ? itemEdit.employee_first_name : "",
     employee_middle_name: itemEdit ? itemEdit.employee_middle_name : "",
     employee_last_name: itemEdit ? itemEdit.employee_last_name : "",
+    employee_start_work_date: itemEdit ? itemEdit.employee_start_work_date : "",
+    employee_birthday: itemEdit ? itemEdit.employee_birthday : "",
     employee_email: itemEdit ? itemEdit.employee_email : "",
-    employee_department_id: itemEdit ? itemEdit.employee_department_id : "", // NEW
+    employee_department_id: itemEdit ? itemEdit.employee_department_id : "", 
     employee_name_old: itemEdit ? itemEdit.employee_first_name : "",
   };
 
@@ -74,8 +76,10 @@ const ModalAddEmployees = ({ itemEdit }) => {
     employee_first_name: Yup.string().trim().required("required."),
     employee_middle_name: Yup.string().trim().required("required."),
     employee_last_name: Yup.string().trim().required("required."),
+    employee_start_work_date: Yup.string().trim().required("required."),
+    employee_birthday: Yup.string().trim().required("required."),
     employee_email: Yup.string().trim().required("required."),
-    employee_department_id: Yup.string().required("required."), // NEW
+    employee_department_id: Yup.string().required("required."),
   });
 
   const handleClose = () => {
@@ -144,6 +148,22 @@ const ModalAddEmployees = ({ itemEdit }) => {
                           disabled={mutation.isPending}
                         />
                       </div>
+                                            <div className="relative mb-6">
+                                              <InputText
+                                                label="Start Work Date"
+                                                name="employee_start_work_date"
+                                                type="date"
+                                                disabled={mutation.isPending}
+                                              />
+                                            </div>
+                                            <div className="relative mb-6">
+                                              <InputText
+                                                label="Birthday"
+                                                name="employee_birthday"
+                                                type="date"
+                                                disabled={mutation.isPending}
+                                              />
+                                            </div>
                       <div className="relative mb-6">
                         <InputSelect
                           label="Department"
