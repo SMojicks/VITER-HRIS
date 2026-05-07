@@ -13,6 +13,10 @@ class Employees
     public $employee_created;
     public $employee_updated;
     public $employee_department_id;
+    public $employee_supervisor_id;
+    public $employee_supervisor_first_name;
+    public $employee_supervisor_last_name;
+    public $employee_supervisor_email;
 
     public $start;
     public $total;
@@ -77,7 +81,8 @@ class Employees
         }
         return $query;
     }
-public function readAll(){
+
+    public function readAll(){
         try{
             // JOINING TABLE
             $sql = "select ";
@@ -165,6 +170,7 @@ public function readAll(){
         }
         return $query;
     }
+
     public function update(){
         try {
             $sql = " update {$this->tblEmployees} set ";
@@ -194,6 +200,7 @@ public function readAll(){
         }
         return $query;
     }
+
     public function active(){
         try{
             $sql =" update {$this->tblEmployees} set ";
@@ -211,6 +218,7 @@ public function readAll(){
             $query = false;
         } return $query;
     }
+
     public function delete(){
         try{
             $sql =" delete from {$this->tblEmployees} ";
@@ -224,6 +232,7 @@ public function readAll(){
             $query = false;
         } return $query;
     }
+
     public function checkName(){
         try{
             $sql = "select ";
@@ -234,7 +243,122 @@ public function readAll(){
             $query->execute([
                 "employee_first_name" => $this->employee_first_name,
             ]);
-        }catch(PROException $e){
+        }catch(PDOException $e){
+            $query = false;
+        }
+        return $query;
+    }
+
+    // --- NEW METHODS FOR DIRECT REPORTS FEATURE ---
+
+    // Check if the selected supervisor is actually a subordinate of the target employee
+    public function checkCircularDependency($supervisor_id, $subordinate_id) {
+        try {
+            $sql = "SELECT employee_aid FROM {$this->tblEmployees} ";
+            $sql .= "WHERE employee_aid = :supervisor_id AND employee_supervisor_id = :subordinate_id";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "supervisor_id" => $supervisor_id,
+                "subordinate_id" => $subordinate_id
+            ]);
+            $rowCount = $query->rowCount();
+            return $rowCount > 0;
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
+
+    // Fetch employee details to populate supervisor name/email automatically
+public function getEmployeeDetails($id) {
+        try {
+            // Added 'employee_supervisor_id' to the SELECT query
+            $sql = "SELECT employee_first_name, employee_last_name, employee_email, employee_supervisor_id ";
+            $sql .= "FROM {$this->tblEmployees} WHERE employee_aid = :id LIMIT 1";
+            $query = $this->connection->prepare($sql);
+            $query->execute(["id" => $id]);
+            return $query->fetch(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
+
+    // Update the direct report in the employee table
+    public function updateDirectReport() {
+        try {
+            $sql = "UPDATE {$this->tblEmployees} SET ";
+            $sql .= " employee_supervisor_id = :employee_supervisor_id, ";
+            $sql .= " employee_supervisor_first_name = :employee_supervisor_first_name, ";
+            $sql .= " employee_supervisor_last_name = :employee_supervisor_last_name, ";
+            $sql .= " employee_supervisor_email = :employee_supervisor_email, ";
+            $sql .= " employee_updated = :employee_updated ";
+            $sql .= " WHERE employee_aid = :employee_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employee_supervisor_id" => $this->employee_supervisor_id,
+                "employee_supervisor_first_name" => $this->employee_supervisor_first_name,
+                "employee_supervisor_last_name" => $this->employee_supervisor_last_name,
+                "employee_supervisor_email" => $this->employee_supervisor_email,
+                "employee_updated" => $this->employee_updated,
+                "employee_aid" => $this->employee_aid,
+            ]);
+        } catch (PDOException $e) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readAllDirectReports(){
+        try{
+            $sql = "select * from {$this->tblEmployees} as employees, {$this->tblSettingsDepartment} as department ";
+            $sql .= " where employees.employee_department_id = department.department_aid ";
+            // FILTER: Only show employees with an assigned supervisor
+            $sql .= " and (employees.employee_supervisor_id IS NOT NULL AND employees.employee_supervisor_id != '') ";
+            
+            $sql .= $this->employee_is_active != '' ? " and employees.employee_is_active = :employee_is_active " : " ";
+            $sql .= $this->search != '' ? " and ( " : " ";
+            $sql .= $this->search != '' ? " employees.employee_first_name like :employee_first_name  " : " ";
+            $sql .= $this->search != '' ? " or employees.employee_last_name like :employee_last_name  " : " ";
+            $sql .= $this->search != '' ? " ) " : " ";
+            
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                ...$this->employee_is_active != '' ? ["employee_is_active" => $this->employee_is_active] : [],
+                ...$this->search != '' ? [
+                    "employee_first_name" => "%{$this->search}%",
+                    "employee_last_name" => "%{$this->search}%",
+                ] : [],
+            ]);
+        }catch(PDOException $e){
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readLimitDirectReports(){
+        try{
+            $sql = "select * from {$this->tblEmployees} as employees, {$this->tblSettingsDepartment} as department ";
+            $sql .= " where employees.employee_department_id = department.department_aid ";
+            // FILTER: Only show employees with an assigned supervisor
+            $sql .= " and (employees.employee_supervisor_id IS NOT NULL AND employees.employee_supervisor_id != '') ";
+            
+            $sql .= $this->employee_is_active != '' ? " and employees.employee_is_active = :employee_is_active " : " ";
+            $sql .= $this->search != '' ? " and ( " : " ";
+            $sql .= $this->search != '' ? " employees.employee_first_name like :employee_first_name  " : " ";
+            $sql .= $this->search != '' ? " or employees.employee_last_name like :employee_last_name  " : " ";
+            $sql .= $this->search != '' ? " ) " : " ";
+            
+            $sql .= "limit :start, :total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                ...$this->employee_is_active != '' ? ["employee_is_active" => $this->employee_is_active] : [],
+                ...$this->search != '' ? [
+                    "employee_first_name" => "%{$this->search}%",
+                    "employee_last_name" => "%{$this->search}%",
+                ] : [],
+                "start" => $this->start - 1,
+                "total" => $this->total,
+            ]);
+        }catch(PDOException $e){
             $query = false;
         }
         return $query;

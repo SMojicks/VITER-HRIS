@@ -118,10 +118,11 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
               <th>#</th>
               <th>Status</th>
               <th>Employee Name</th>
-              <th>Start Date</th>
-              <th>Birthday</th>
+              {/* <th>Start Date</th>
+              <th>Birthday</th> */}
               <th>Department</th>
               <th>Email</th>
+              <th>Supervisor</th>
               <th></th>
             </tr>
           </thead>
@@ -161,10 +162,15 @@ const EmployeesList = ({ itemEdit, setItemEdit }) => {
                       <td>
                         {item.employee_first_name} {item.employee_last_name}
                       </td>
-                      <td>{formatDate(item.employee_start_work_date, "--", "short-date")}</td>
-                      <td>{formatDate(item.employee_birthday, "--", "short-date")}</td>
+                      {/* <td>{formatDate(item.employee_start_work_date, "--", "short-date")}</td>
+                      <td>{formatDate(item.employee_birthday, "--", "short-date")}</td> */}
                       <td>{item.department_name}</td>
                       <td>{item.employee_email}</td>
+                      <td>
+  {item.employee_supervisor_id 
+    ? `${item.employee_supervisor_first_name} ${item.employee_supervisor_last_name}` 
+    : <span className="text-gray-400 italic">No Supervisor</span>}
+</td>
                       {/* edit & archive / delete & restore */}
                       <td>
                         <div className="flex items-center gap-3 ">

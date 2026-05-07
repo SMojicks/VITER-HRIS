@@ -75,3 +75,15 @@ export const getUrlParam = (id) => {
   // return param;
   return urlParams;
 };
+
+// Get current user type/role path for routing and breadcrumbs
+export const getUserType = () => {
+  // If you eventually have multiple user roles (admin, user, etc.) 
+  // and store them in localStorage after login, you can do something like:
+  // const role = localStorage.getItem("user_role");
+  // return `/${role}`;
+
+  // For now, since you are working on the developer side, 
+  // we return the developer base path using your existing variables:
+  return `/${urlDeveloper}`; 
+};

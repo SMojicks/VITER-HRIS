@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2026 at 09:40 AM
+-- Generation Time: May 07, 2026 at 09:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,8 +33,14 @@ CREATE TABLE `employees` (
   `employee_first_name` varchar(128) NOT NULL,
   `employee_middle_name` varchar(128) NOT NULL,
   `employee_last_name` varchar(128) NOT NULL,
+  `employee_start_work_date` datetime NOT NULL,
+  `employee_birthday` datetime NOT NULL,
   `employee_department_id` varchar(20) NOT NULL,
   `employee_email` varchar(255) NOT NULL,
+  `employee_supervisor_id` int(11) NOT NULL,
+  `employee_supervisor_first_name` varchar(128) NOT NULL,
+  `employee_supervisor_last_name` varchar(128) NOT NULL,
+  `employee_supervisor_email` varchar(255) NOT NULL,
   `employee_created` datetime NOT NULL,
   `employee_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -43,9 +49,17 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employee_aid`, `employee_is_active`, `employee_first_name`, `employee_middle_name`, `employee_last_name`, `employee_department_id`, `employee_email`, `employee_created`, `employee_updated`) VALUES
-(1, 1, 'testtes', 'test', 'test', '1', 'test@gmail.com', '2026-04-24 07:27:35', '2026-04-24 07:27:35'),
-(2, 1, 'Seb', 'Austria', 'Mojica', '2', 'seb@gmail.com', '2026-04-24 08:09:59', '2026-04-24 08:09:59');
+INSERT INTO `employees` (`employee_aid`, `employee_is_active`, `employee_first_name`, `employee_middle_name`, `employee_last_name`, `employee_start_work_date`, `employee_birthday`, `employee_department_id`, `employee_email`, `employee_supervisor_id`, `employee_supervisor_first_name`, `employee_supervisor_last_name`, `employee_supervisor_email`, `employee_created`, `employee_updated`) VALUES
+(48, 0, 'Jhonas', 'test', 'Sotero', '2026-06-06 00:00:00', '2026-06-06 00:00:00', '5', 'jhonas@gmail.com', 0, '', '', '', '2026-05-06 14:12:11', '2026-05-07 15:13:42'),
+(49, 1, 'David', 'test', 'Malabanan', '2026-07-06 00:00:00', '2026-08-06 00:00:00', '5', 'david@gmail.com', 0, '', '', '', '2026-05-06 14:12:30', '2026-05-07 15:05:16'),
+(51, 1, 'Jeremy', 'test', 'Viterbo', '2026-08-06 00:00:00', '2026-08-06 00:00:00', '5', 'jeremy@gmail.com', 0, '', '', '', '2026-05-06 14:13:08', '2026-05-07 14:05:00'),
+(52, 1, 'Khent', 'test', 'Adelino', '2026-04-06 00:00:00', '2026-04-15 00:00:00', '5', 'khent@gmail.com', 54, 'Fae', 'Tubo', 'fae@gmail.com', '2026-05-06 14:14:02', '2026-05-07 15:05:38'),
+(53, 1, 'Ratten', 'test', 'Padilla', '2026-03-06 00:00:00', '2026-02-06 00:00:00', '5', 'ratten@gmail.com', 0, '', '', '', '2026-05-06 14:14:17', '2026-05-07 14:56:12'),
+(54, 1, 'Fae', 'test', 'Tubo', '2026-03-06 00:00:00', '2026-01-06 00:00:00', '5', 'fae@gmail.com', 0, '', '', '', '2026-05-06 14:14:36', '2026-05-07 14:56:18'),
+(55, 1, 'IT test employee', 'test', 'test', '2026-12-06 00:00:00', '2026-12-06 00:00:00', '1', 'test@gmail.com', 0, '', '', '', '2026-05-06 14:14:56', '2026-05-07 14:56:24'),
+(56, 1, 'Accounting test employee', 'test', 'test', '2026-08-06 00:00:00', '2026-08-06 00:00:00', '2', 'test@gmail.com', 0, '', '', '', '2026-05-06 14:15:12', '2026-05-07 14:56:28'),
+(57, 1, 'HR test employee', 'test', 'test', '2026-12-06 00:00:00', '2026-02-06 00:00:00', '3', 'test@gmail.com', 0, '', '', '', '2026-05-06 14:15:27', '2026-05-07 14:56:38'),
+(62, 1, 'Kristeen', 'test', 'Arocena', '2026-05-06 00:00:00', '2026-12-06 00:00:00', '5', 'kristeen@gmail.com', 0, '', '', '', '2026-05-06 14:30:12', '2026-05-07 14:56:35');
 
 -- --------------------------------------------------------
 
@@ -70,7 +84,10 @@ CREATE TABLE `memo` (
 --
 
 INSERT INTO `memo` (`memo_aid`, `memo_is_active`, `memo_from`, `memo_to`, `memo_date`, `memo_category`, `memo_text`, `memo_created`, `memo_updated`) VALUES
-(5, 1, 'FBS Management', 'Employees', '2026-04-22', 'Notice', 'Memo No. 0825, Series 2025\nTO: ALL EMPLOYEES\nRE: LAUNCH OF CLIENT REFERRAL INCENTIVE PROGRAM\n\nTo further grow our client base and expand the reach of our service offerings, we are pleased to launch the Client\nReferral Incentive Program. This program provides monetary incentives to employees, partners, or external\ncontacts who successfully refer a local client that closes a deal with Frontline Business Solutions in any of the\nfollowing services:\n1. Website Development\n2. Web Applications Subscriptions\n3. Customized Web App Development\n4. Web and Graphic Design\n5. Business Registration\n6. Bookkeeping & Business Compliance\n\nPlease note that this incentive applies to all employees, except those whose primary role or job function is to\nacquire clients (e.g, sales, marketing, or business development roles).\n\nThe incentive amount will depend on the size and scope of the closed deal and may range from ₱500 to ₱1,000, as\ndetermined by the management, marketing team, and project lead.\n\nThank you for your continued support in helping us expand our network and client base.', '2026-04-24 07:15:20', '2026-04-24 07:29:59');
+(6, 1, 'FBS Management', 'FBS Employees', '2026-04-20', 'Notices', 'Memo No. 0825, Series 2025\nTO: ALL EMPLOYEES\nRE: LAUNCH OF CLIENT REFERRAL INCENTIVE PROGRAM\n\nTo further grow our client base and expand the reach of our service offerings, we are pleased to launch the Client\nReferral Incentive Program. This program provides monetary incentives to employees, partners, or external\ncontacts who successfully refer a local client that closes a deal with Frontline Business Solutions in any of the\nfollowing services:\n1. Website Development\n2. Web Applications Subscriptions\n3. Customized Web App Development\n4. Web and Graphic Design\n5. Business Registration\n6. Bookkeeping & Business Compliance \n\nPlease note that this incentive applies to all employees, except those whose primary role or job function is to\nacquire clients (e.g., sales, marketing, or business development roles).\n\nThe incentive amount will depend on the size and scope of the closed deal and may range from P500 to ₱1,000, as\ndetermined by the management, marketing team, and project lead.\n\nThank you for your continued support in helping us expand our network and client base. test test test', '2026-04-22 10:11:13', '2026-04-22 11:44:08'),
+(10, 1, 'HR Department', 'All Employees', '2026-04-30', 'Notices', 'Memo No. 101, Series 2026\nTO: All Employees\nFROM: HR Department\nDATE: January 15, 2026\nCATEGORY: Notices\n\nRE: Implementation of New Attendance Monitoring System\n\nTo improve accuracy and efficiency in tracking employee attendance, the company will implement a new digital attendance monitoring system starting February 1, 2026.\n\nKey features include:\n\nBiometric login integration\nReal-time attendance tracking\nAutomated late and absence reports\nEmployee self-service dashboard\n\nAll employees are required to register their biometric data before the implementation date.\n\nThank you for your cooperation.', '2026-04-22 11:52:29', '2026-04-22 11:52:41'),
+(11, 1, 'IT Department', 'All Staff', '2026-04-19', 'Advisory', 'RE: Scheduled System Maintenance\n\nPlease be advised that system maintenance will take place on February 20, 2026, from 10:00 PM to 2:00 AM.\n\nDuring this period:\n\nHRIS and Payroll systems will be temporarily unavailable\nUsers may experience intermittent access issues\nData updates will be paused\n\nWe recommend saving all work prior to the scheduled downtime.\n\nThank you for your understanding.', '2026-04-22 11:53:43', '2026-04-22 11:53:43'),
+(12, 0, 'Management', 'All Employees', '2026-04-29', 'Announcement', 'RE: Launch of Employee Wellness Program\n\nWe are pleased to introduce our Employee Wellness Program aimed at promoting health and well-being in the workplace.\n\nProgram highlights:\n\nFree monthly health check-ups\nMental health support sessions\nGym membership discounts\nWellness webinars and workshops\n\nParticipation is voluntary but highly encouraged.\n\nLet’s work together toward a healthier workplace.', '2026-04-22 11:54:17', '2026-04-22 12:00:20');
 
 -- --------------------------------------------------------
 
@@ -91,33 +108,10 @@ CREATE TABLE `settings_department` (
 --
 
 INSERT INTO `settings_department` (`department_aid`, `department_is_active`, `department_name`, `department_created`, `department_updated`) VALUES
-(3, 1, 'test', '2026-04-24 08:08:53', '2026-04-24 08:39:34'),
-(4, 1, 'HR Department', '2026-04-24 08:08:59', '2026-04-24 08:08:59');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `settings_notification`
---
-
-CREATE TABLE `settings_notification` (
-  `notification_aid` int(11) NOT NULL,
-  `notification_is_active` tinyint(4) NOT NULL,
-  `notification_first_name` varchar(128) NOT NULL,
-  `notification_last_name` varchar(128) NOT NULL,
-  `notification_purpose` varchar(128) NOT NULL,
-  `notification_email` varchar(128) NOT NULL,
-  `notification_created` datetime NOT NULL,
-  `notification_updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `settings_notification`
---
-
-INSERT INTO `settings_notification` (`notification_aid`, `notification_is_active`, `notification_first_name`, `notification_last_name`, `notification_purpose`, `notification_email`, `notification_created`, `notification_updated`) VALUES
-(5, 1, 'Jhonas', 'Sotero', 'Overtime', 'sotero@gmail.com', '2026-04-24 10:04:53', '2026-04-24 10:04:53'),
-(6, 1, 'David', 'Malabanan123', 'Overtime', 'Malabanan@gmail.com', '2026-04-24 10:04:07', '2026-04-24 12:04:24');
+(1, 1, 'IT Department', '2026-04-23 08:33:32', '2026-04-23 09:37:51'),
+(2, 1, 'Accounting Department', '2026-04-23 08:46:07', '2026-04-23 09:22:35'),
+(3, 1, 'HR Department', '2026-04-23 08:46:23', '2026-04-23 11:11:03'),
+(5, 1, 'Web Development Department', '2026-04-23 11:12:29', '2026-04-23 11:13:55');
 
 -- --------------------------------------------------------
 
@@ -129,7 +123,6 @@ CREATE TABLE `settings_roles` (
   `role_aid` int(11) NOT NULL,
   `role_is_active` tinyint(1) NOT NULL,
   `role_name` varchar(128) NOT NULL,
-  `role_code` varchar(50) NOT NULL,
   `role_description` text NOT NULL,
   `role_created` datetime NOT NULL,
   `role_updated` datetime NOT NULL
@@ -139,10 +132,9 @@ CREATE TABLE `settings_roles` (
 -- Dumping data for table `settings_roles`
 --
 
-INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_code`, `role_description`, `role_created`, `role_updated`) VALUES
-(22, 1, 'developer', 'r_is_developer', 'test', '2026-04-16 12:04:30', '2026-05-04 08:05:24'),
-(23, 1, 'admin', 'r_is_admin', 'test', '2026-04-16 12:04:38', '2026-05-04 08:05:56'),
-(24, 1, 'viewer', 'r_is_viewer', 'viewer', '2026-05-04 08:05:09', '2026-05-04 08:05:09');
+INSERT INTO `settings_roles` (`role_aid`, `role_is_active`, `role_name`, `role_description`, `role_created`, `role_updated`) VALUES
+(23, 1, 'admin', 'test', '2026-04-16 12:04:38', '2026-04-22 11:04:08'),
+(24, 1, 'developer', 'test', '2026-04-22 11:04:00', '2026-04-22 11:04:00');
 
 -- --------------------------------------------------------
 
@@ -158,7 +150,6 @@ CREATE TABLE `settings_users` (
   `users_email` varchar(255) NOT NULL,
   `users_role_id` varchar(20) NOT NULL,
   `users_password` varchar(255) NOT NULL,
-  `users_key` varchar(255) NOT NULL,
   `users_created` datetime NOT NULL,
   `users_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -167,8 +158,11 @@ CREATE TABLE `settings_users` (
 -- Dumping data for table `settings_users`
 --
 
-INSERT INTO `settings_users` (`users_aid`, `users_is_active`, `users_first_name`, `users_last_name`, `users_email`, `users_role_id`, `users_password`, `users_key`, `users_created`, `users_updated`) VALUES
-(24, 1, 'Seb', 'Mojica', 'sebastianmojica03@gmail.com', '22', '$2y$10$mUBr.GqRMhvYXdRPI3UiyupknaZKYj3ASw0Fg2IX/Ce1Z5S/nTueO', '', '2026-05-04 15:05:43', '2026-05-04 15:25:07');
+INSERT INTO `settings_users` (`users_aid`, `users_is_active`, `users_first_name`, `users_last_name`, `users_email`, `users_role_id`, `users_password`, `users_created`, `users_updated`) VALUES
+(29, 1, 'John', 'Doe', 'Johndoe@gmail.com', '22', '', '2026-04-21 12:04:38', '2026-04-21 12:04:38'),
+(30, 1, 'Jane', 'Doe', 'Janedoe@gmail.com', '23', '', '2026-04-21 12:04:57', '2026-04-22 11:04:45'),
+(32, 1, 'Sarah', 'Cruz', 'sarah@gmail.com', '23', '', '2026-04-21 12:04:46', '2026-04-21 12:04:46'),
+(33, 0, 'Gojo', 'Satoru', 'satoru@gmail.com', '22', '', '2026-04-21 12:04:10', '2026-04-21 12:04:23');
 
 --
 -- Indexes for dumped tables
@@ -193,12 +187,6 @@ ALTER TABLE `settings_department`
   ADD PRIMARY KEY (`department_aid`);
 
 --
--- Indexes for table `settings_notification`
---
-ALTER TABLE `settings_notification`
-  ADD PRIMARY KEY (`notification_aid`);
-
---
 -- Indexes for table `settings_roles`
 --
 ALTER TABLE `settings_roles`
@@ -218,25 +206,19 @@ ALTER TABLE `settings_users`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `employee_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `memo`
 --
 ALTER TABLE `memo`
-  MODIFY `memo_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `memo_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `settings_department`
 --
 ALTER TABLE `settings_department`
-  MODIFY `department_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `settings_notification`
---
-ALTER TABLE `settings_notification`
-  MODIFY `notification_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `department_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `settings_roles`
@@ -248,7 +230,7 @@ ALTER TABLE `settings_roles`
 -- AUTO_INCREMENT for table `settings_users`
 --
 ALTER TABLE `settings_users`
-  MODIFY `users_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `users_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
